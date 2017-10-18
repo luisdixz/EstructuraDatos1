@@ -8,13 +8,13 @@ import javax.swing.*;
 import java.awt.event.KeyEvent;
 
 public class Principal extends JFrame implements ActionListener {
-    public ListaDoble getLista() {
+    /*public ListaDoble getLista() {
         return lista;
     }
 
     public void setLista(ListaDoble lista) {
         this.lista = lista;
-    }
+    }*/
 
     private ListaDoble lista = new ListaDoble();
 
@@ -107,15 +107,15 @@ public class Principal extends JFrame implements ActionListener {
         Principal tld = new Principal();
         if(e.getSource()== jmi_vacio) {
             if(tld.lista.isVacio())
-                JOptionPane.showMessageDialog(null,"La lista esta vacÃ­a");
+                JOptionPane.showMessageDialog(null,"La lista esta vacía");
             else
-                JOptionPane.showMessageDialog(null,"La lista no esta vacÃ­a");
+                JOptionPane.showMessageDialog(null,"La lista no esta vacía");
         }
         else if(e.getSource()==jmi_Iadelante) {
             EventQueue.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    InsAdelante ina = new InsAdelante(tld,tld.getLista());
+                    InsAdelante ina = new InsAdelante(tld);
                     ina.setVisible(true);
                 }
             });

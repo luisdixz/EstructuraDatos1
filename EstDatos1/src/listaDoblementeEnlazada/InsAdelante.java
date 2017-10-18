@@ -22,13 +22,13 @@ public class InsAdelante extends JFrame implements ActionListener {
     private Principal prin;
     private ListaDoble lis;
 
-    public InsAdelante(Principal tld, ListaDoble lista) {
+    public InsAdelante(Principal tld) {
         setTitle("Insertar Adelante");
         setBounds(400,150,500,400);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         prin = tld;
-        lis = tld.getLista();
+        //lis = tld.getLista();
 
         fondo = new JLabel();
         fondo.setOpaque(true);
@@ -50,12 +50,12 @@ public class InsAdelante extends JFrame implements ActionListener {
         lbl_artista.setBounds(50,150,150,25);
         fondo.add(lbl_artista);
 
-        lbl_album = new JLabel("Álbum:");
+        lbl_album = new JLabel("Ã�lbum:");
         lbl_album.setFont(fuente);
         lbl_album.setBounds(50,200,150,25);
         fondo.add(lbl_album);
 
-        lbl_genero = new JLabel("Género:");
+        lbl_genero = new JLabel("GÃ©nero:");
         lbl_genero.setFont(fuente);
         lbl_genero.setBounds(50,250, 150,25);
         fondo.add(lbl_genero);
@@ -100,7 +100,7 @@ public class InsAdelante extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+    	ListaDoble temp = new ListaDoble();
         if(e.getSource()==btn_cancelar) {
             this.dispose();
         } else if(e.getSource()==btn_aceptar) {
@@ -109,7 +109,8 @@ public class InsAdelante extends JFrame implements ActionListener {
             artista = tf_art.getText();
             album = tf_alb.getText();
             genero = tf_gen.getText();
-            lis.insertarAdelante(id,cancion,artista,album,genero);
+            temp.insertarAdelante(id,cancion,artista,album,genero);
+            //prin.setLista(temp);
             //prin.setLista(prin.getLista().insertarAdelante(id,cancion,artista,album,genero));
         }
     }
