@@ -115,7 +115,7 @@ public class Principal extends JFrame implements ActionListener {
             EventQueue.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    InsAdelante ina = new InsAdelante(tld);
+                    InsAdelante ina = new InsAdelante(/*tld*/);
                     ina.setVisible(true);
                 }
             });

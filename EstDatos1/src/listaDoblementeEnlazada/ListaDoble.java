@@ -1,17 +1,17 @@
 package listaDoblementeEnlazada;
 
 public class ListaDoble {
-    private Musica cabeza;
+    private Nodo cabeza;
 
     public ListaDoble() {
         this.cabeza = null;
     }
 
-    public Musica getCabeza() {
+    public Nodo getCabeza() {
         return cabeza;
     }
 
-    public void setCabeza(Musica cabeza) {
+    public void setCabeza(Nodo cabeza) {
         this.cabeza = cabeza;
     }
 
@@ -25,7 +25,7 @@ public class ListaDoble {
     public int contar () {
         int n = 0;
 
-        Musica temp = this.cabeza;
+        Nodo temp = this.cabeza;
         if(temp!= null) {
 
             n++;
@@ -38,7 +38,7 @@ public class ListaDoble {
     //public void encontrar
 
     public void insertar(String id, String cancion, String artista, String album, String genero) {
-        Musica nodo = new Musica();
+        Nodo nodo = new Nodo();
 
         nodo.setId(id);
         nodo.setCancion(cancion);
@@ -54,8 +54,8 @@ public class ListaDoble {
         if(this.isVacio())
             insertar(id, cancion, artista, album, genero);
         else {
-            //Musica temp = this.cabeza;
-            Musica nodo = new Musica();
+            //Nodo temp = this.cabeza;
+            Nodo nodo = new Nodo();
             nodo.setId(id);
             nodo.setCancion(cancion);
             nodo.setArtista(artista);
@@ -74,14 +74,14 @@ public class ListaDoble {
         if(this.isVacio())
             this.insertar(id, cancion, artista, album, genero);
         else{
-            Musica nodo = new Musica();
+            Nodo nodo = new Nodo();
             nodo.setId(id);
             nodo.setCancion(cancion);
             nodo.setArtista(artista);
             nodo.setAlbum(album);
             nodo.setGenero(genero);
 
-            Musica temp = this.cabeza;
+            Nodo temp = this.cabeza;
 
             while(temp.getSig() != null) {
                 temp = temp.getSig();
@@ -103,7 +103,7 @@ public class ListaDoble {
     public StringBuilder imprimir() {
         StringBuilder cadena = new StringBuilder();
         cadena.append("Cabeza:\n");
-        Musica temp = this.cabeza;
+        Nodo temp = this.cabeza;
 
         while (temp!=null) {
             cadena.append("Nodo anterior: ");
