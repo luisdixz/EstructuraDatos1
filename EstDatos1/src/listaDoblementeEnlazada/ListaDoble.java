@@ -52,7 +52,7 @@ public class ListaDoble {
 
     public void insertarAntes (String id, String cancion, String artista, String album, String genero) {
         if(this.isVacio())
-            insertar(id, cancion, artista, album, genero);
+            this.insertar(id,cancion,artista,album,genero);
         else {
             //Nodo temp = this.cabeza;
             Nodo nodo = new Nodo();
@@ -72,7 +72,7 @@ public class ListaDoble {
 
     public void insertarAdelante (String id, String cancion, String artista, String album, String genero) {
         if(this.isVacio())
-            this.insertar(id, cancion, artista, album, genero);
+            this.insertar(id,cancion,artista,album,genero);
         else{
             Nodo nodo = new Nodo();
             nodo.setId(id);
@@ -80,6 +80,7 @@ public class ListaDoble {
             nodo.setArtista(artista);
             nodo.setAlbum(album);
             nodo.setGenero(genero);
+            //.setDatos(datos);
 
             Nodo temp = this.cabeza;
 

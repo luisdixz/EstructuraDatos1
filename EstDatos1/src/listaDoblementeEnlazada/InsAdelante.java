@@ -21,8 +21,10 @@ public class InsAdelante extends JFrame implements ActionListener {
     private String id, cancion, artista, album, genero;
     /*private Principal prin;
     private ListaDoble lis;*/
+    
+    private Musica mus;
 
-    public InsAdelante(/*Principal tld*/) {
+    public InsAdelante(Musica mu) {
         setTitle("Insertar Adelante");
         setBounds(400,150,500,400);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -30,6 +32,7 @@ public class InsAdelante extends JFrame implements ActionListener {
         //prin = tld;
         //lis = tld.getLista();
 
+        this.mus = mu;
         fondo = new JLabel();
         fondo.setOpaque(true);
         fondo.setLayout(null);
@@ -109,6 +112,12 @@ public class InsAdelante extends JFrame implements ActionListener {
             artista = tf_art.getText();
             album = tf_alb.getText();
             genero = tf_gen.getText();
+            
+            mus.setId(id);
+            mus.setCancion(cancion);
+            mus.setArtista(artista);
+            mus.setAlbum(album);
+            mus.setGenero(genero);
             //pr.lista.insertarAdelante(id,cancion,artista,album,genero);
             //prin.setLista(temp);
             //prin.setLista(prin.getLista().insertarAdelante(id,cancion,artista,album,genero));

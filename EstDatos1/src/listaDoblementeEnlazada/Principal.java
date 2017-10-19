@@ -8,33 +8,36 @@ import javax.swing.*;
 import java.awt.event.KeyEvent;
 
 public class Principal extends JFrame implements ActionListener {
-    /*public ListaDoble getLista() {
-        return lista;
-    }
-
-    public void setLista(ListaDoble lista) {
-        this.lista = lista;
-    }*/
 
     private ListaDoble lista = new ListaDoble();
+    private Musica mu = new Musica();
 
+    private JScrollBar js;
     private JMenuBar jmb;
     private JMenu jm_insertar,jm_eliminar, jm_recorrido, jm_opc;
     private JMenuItem jmi_Iadelante, jmi_Iatras, jmi_imprimir, jmi_salir, jmi_vacio;
     private JLabel fondo;
     private JLabel lbl_res;
     private JTextArea ta_res;
+    private JPanel pnl_Iadelante, pnl_imp;
 
     private Font fuente = new Font("Tahoma", Font.PLAIN, 16);
     private Font f2 = new Font("Tahoma",Font.PLAIN,14);
     private Font fLog = new Font("",Font.PLAIN,14);
-
+    
+    private JLabel lbl_id, lbl_nombre, lbl_artista, lbl_album, lbl_genero;
+    private JTextField tf_id, tf_nom, tf_art, tf_alb, tf_gen;
+    private JButton btn_aceptar, btn_cancelar;
+    
+    private String id, cancion, artista, album, genero;
+    
     public Principal() {
         setTitle("Listas");
-        setBounds(400,200,500,300);
+        setBounds(400,200,500,500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         fondo = new JLabel();
+        fondo.setBackground(new Color(255,255,255));
         fondo.setOpaque(true);
         fondo.setLayout(null);
         setContentPane(fondo);
@@ -53,7 +56,7 @@ public class Principal extends JFrame implements ActionListener {
         jmb.add(jm_opc);
         jmb.add(jm_insertar);
 
-        jmi_vacio = new JMenuItem("¿Lista vacia? (1)");
+        jmi_vacio = new JMenuItem("Â¿Lista vacia? (1)");
         jmi_vacio.setFont(f2);
         jmi_vacio.setMnemonic(KeyEvent.VK_1);
         jmi_vacio.addActionListener(this);
@@ -84,22 +87,100 @@ public class Principal extends JFrame implements ActionListener {
         jm_insertar.add(jmi_Iadelante);
         jm_insertar.add(jmi_Iatras);
 
+        pnl_imp = new JPanel();
+        pnl_imp.setLayout(null);
+        pnl_imp.setBounds(25, 25, 440, 380);
+        pnl_imp.setBackground(new Color(255,255,255));
+        pnl_imp.setVisible(false);
+        fondo.add(pnl_imp);      
+        
         lbl_res = new JLabel("Lista Actual:");
-        lbl_res.setBounds(50,50,200,25);
+        lbl_res.setBounds(10,10,200,25);
         lbl_res.setFont(f2);
-        lbl_res.setVisible(false);
-        fondo.add(lbl_res);
+        //lbl_res.setVisible(false);
+        pnl_imp.add(lbl_res);
 
         ta_res = new JTextArea();
         ta_res.setFont(f2);
         ta_res.setBounds(0,0,400,325);
-        ta_res.setVisible(false);
-        ta_res.setEnabled(false);
+        //ta_res.setVisible(false);
+        pnl_imp.setEnabled(false);
 
-        JScrollBar js = new JScrollBar();
+        js = new JScrollBar();
         js.setBounds(50,75,400,325);
         js.add(ta_res);
-        fondo.add(js);
+        //js.setVisible(false);
+        pnl_imp.add(js);
+        
+        pnl_Iadelante = new JPanel();
+        pnl_Iadelante.setBorder(BorderFactory.createTitledBorder("Insertar adelante"));
+        pnl_Iadelante.setLayout(null);
+        pnl_Iadelante.setBounds(25, 25, 440, 380);
+        pnl_Iadelante.setBackground(new Color(255,255,255));
+        pnl_Iadelante.setVisible(false);
+        fondo.add(pnl_Iadelante);  
+        
+        lbl_id = new JLabel("id:");
+        lbl_id.setFont(fuente);
+        lbl_id.setBounds(25,50,150,25);
+        pnl_Iadelante.add(lbl_id);
+
+        lbl_nombre = new JLabel("Nombre:");
+        lbl_nombre.setFont(fuente);
+        lbl_nombre.setBounds(25,100,150,25);
+        pnl_Iadelante.add(lbl_nombre);
+
+        lbl_artista = new JLabel("Artista:");
+        lbl_artista.setFont(fuente);
+        lbl_artista.setBounds(25,150,150,25);
+        pnl_Iadelante.add(lbl_artista);
+
+        lbl_album = new JLabel("Álbum:");
+        lbl_album.setFont(fuente);
+        lbl_album.setBounds(25,200,150,25);
+        pnl_Iadelante.add(lbl_album);
+
+        lbl_genero = new JLabel("Género:");
+        lbl_genero.setFont(fuente);
+        lbl_genero.setBounds(25,250, 150,25);
+        pnl_Iadelante.add(lbl_genero);
+
+        tf_id = new JTextField();
+        tf_id.setFont(fuente);
+        tf_id.setBounds(150,50,250,25);
+        pnl_Iadelante.add(tf_id);
+
+        tf_nom = new JTextField();
+        tf_nom.setFont(fuente);
+        tf_nom.setBounds(150,100,250,25);
+        pnl_Iadelante.add(tf_nom);
+
+        tf_art = new JTextField();
+        tf_art.setFont(fuente);
+        tf_art.setBounds(150,150,250,25);
+        pnl_Iadelante.add(tf_art);
+
+        tf_alb = new JTextField();
+        tf_alb.setFont(fuente);
+        tf_alb.setBounds(150,200,250,25);
+        pnl_Iadelante.add(tf_alb);
+
+        tf_gen = new JTextField();
+        tf_gen.setFont(fuente);
+        tf_gen.setBounds(150,250,250,25);
+        pnl_Iadelante.add(tf_gen);
+
+        btn_aceptar = new JButton("Insertar");
+        btn_aceptar.setBounds(115,300,100,25);
+        btn_aceptar.setFont(fuente);
+        btn_aceptar.addActionListener(this);
+        pnl_Iadelante.add(btn_aceptar);
+
+        btn_cancelar = new JButton("Cancelar");
+        btn_cancelar.setFont(fuente);
+        btn_cancelar.setBounds(235,300,100,25);
+        btn_cancelar.addActionListener(this);
+        pnl_Iadelante.add(btn_cancelar);
     }
 
     @Override
@@ -107,24 +188,37 @@ public class Principal extends JFrame implements ActionListener {
         Principal tld = new Principal();
         if(e.getSource()== jmi_vacio) {
             if(tld.lista.isVacio())
-                JOptionPane.showMessageDialog(null,"La lista esta vac�a");
+                JOptionPane.showMessageDialog(null,"La lista esta vacía");
             else
-                JOptionPane.showMessageDialog(null,"La lista no esta vac�a");
+                JOptionPane.showMessageDialog(null,"La lista no esta vacía");
         }
         else if(e.getSource()==jmi_Iadelante) {
-            EventQueue.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    InsAdelante ina = new InsAdelante(/*tld*/);
-                    ina.setVisible(true);
-                }
-            });
+        	js.setVisible(false);
+        	pnl_Iadelante.setVisible(true);
+        	
         }
         else if(e.getSource()==jmi_imprimir) {
-            lbl_res.setVisible(true);
+            js.setVisible(true);
+            pnl_Iadelante.setVisible(false);
+        	//lbl_res.setVisible(true);
             String imp = tld.lista.imprimir().toString();
             ta_res.setText(imp);
-            ta_res.setVisible(true);
+            //ta_res.setVisible(true);
+        }
+        else if(e.getSource()==btn_cancelar) {
+        	js.setVisible(false);
+        	pnl_Iadelante.setVisible(false);
+        	
+        }
+        else if(e.getSource()==btn_aceptar) {
+        	id = tf_id.getText();
+            cancion = tf_nom.getText();
+            artista = tf_art.getText();
+            album = tf_alb.getText();
+            genero = tf_gen.getText();
+            
+            tld.lista.insertarAdelante(id, cancion, artista, album, genero);
+            pnl_Iadelante.setVisible(false);
         }
     }
 
