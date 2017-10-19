@@ -1,5 +1,7 @@
 package listaDoblementeEnlazada;
 
+import javax.swing.JOptionPane;
+
 public class ListaDoble {
     private Nodo cabeza;
 
@@ -40,6 +42,7 @@ public class ListaDoble {
     public void insertar(String id, String cancion, String artista, String album, String genero) {
         Nodo nodo = new Nodo();
 
+        
         nodo.setId(id);
         nodo.setCancion(cancion);
         nodo.setArtista(artista);
@@ -48,6 +51,7 @@ public class ListaDoble {
         nodo.setAnt(null);
         nodo.setSig(null);
         this.cabeza = nodo;
+        JOptionPane.showMessageDialog(null, this.cabeza);
     }
 
     public void insertarAntes (String id, String cancion, String artista, String album, String genero) {
@@ -70,8 +74,9 @@ public class ListaDoble {
         }
     }
 
-    public void insertarAdelante (String id, String cancion, String artista, String album, String genero) {
-        if(this.isVacio())
+    public boolean insertarAdelante (String id, String cancion, String artista, String album, String genero) {
+        boolean res= false;
+    	if(this.isVacio())
             this.insertar(id,cancion,artista,album,genero);
         else{
             Nodo nodo = new Nodo();
@@ -91,7 +96,9 @@ public class ListaDoble {
             nodo.setAnt(temp);
             nodo.setSig(null);
             temp.setSig(nodo);
+            res = true;
         }
+    	return res;
     }
 
     public void eliminarPrimero () {

@@ -1,16 +1,29 @@
 package listaDoblementeEnlazada;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.*;
-
 import java.awt.event.KeyEvent;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 public class Principal extends JFrame implements ActionListener {
 
     private ListaDoble lista = new ListaDoble();
-    private Musica mu = new Musica();
+    //private Musica mu = new Musica();
 
     private JScrollBar js;
     private JMenuBar jmb;
@@ -185,28 +198,28 @@ public class Principal extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Principal tld = new Principal();
         if(e.getSource()== jmi_vacio) {
-            if(tld.lista.isVacio())
+            if(this.lista.isVacio())
                 JOptionPane.showMessageDialog(null,"La lista esta vacía");
             else
                 JOptionPane.showMessageDialog(null,"La lista no esta vacía");
         }
         else if(e.getSource()==jmi_Iadelante) {
-        	js.setVisible(false);
+        	pnl_imp.setVisible(false);
         	pnl_Iadelante.setVisible(true);
         	
         }
         else if(e.getSource()==jmi_imprimir) {
-            js.setVisible(true);
+            pnl_imp.setVisible(true);
             pnl_Iadelante.setVisible(false);
         	//lbl_res.setVisible(true);
-            String imp = tld.lista.imprimir().toString();
+            String imp = this.lista.imprimir().toString();
             ta_res.setText(imp);
+            JOptionPane.showMessageDialog(null, imp);
             //ta_res.setVisible(true);
         }
         else if(e.getSource()==btn_cancelar) {
-        	js.setVisible(false);
+        	pnl_imp.setVisible(false);
         	pnl_Iadelante.setVisible(false);
         	
         }
@@ -217,7 +230,8 @@ public class Principal extends JFrame implements ActionListener {
             album = tf_alb.getText();
             genero = tf_gen.getText();
             
-            tld.lista.insertarAdelante(id, cancion, artista, album, genero);
+            if(this.lista.insertarAdelante(id, cancion, artista, album, genero))
+            	JOptionPane.showMessageDialog(null, "Se ingresaron los datos");
             pnl_Iadelante.setVisible(false);
         }
     }
