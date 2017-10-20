@@ -3,11 +3,14 @@ package listaDoblementeEnlazada;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -18,13 +21,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class Principal extends JFrame implements ActionListener {
 
     private ListaDoble lista = new ListaDoble();
-    //private Musica mu = new Musica();
 
     private JScrollPane js;
     private JMenuBar jmb;
@@ -44,11 +47,13 @@ public class Principal extends JFrame implements ActionListener {
     		lbl_artista = new JLabel[2],
     		lbl_album = new JLabel[2],
     		lbl_genero = new JLabel[2];
+    
     private JTextField[] tf_id = new JTextField[2],
     		tf_nom = new JTextField[2], 
     		tf_art = new JTextField[2], 
     		tf_alb = new JTextField[2], 
     		tf_gen = new JTextField[2];
+    
     private JButton[] btn_aceptar = new JButton[2],
     		btn_cancelar = new JButton[2];
     
@@ -72,16 +77,23 @@ public class Principal extends JFrame implements ActionListener {
         jmb.setForeground(Color.white);
         setJMenuBar(jmb);
 
+        ImageIcon temp = new ImageIcon("iconos/insertar.png");
+        Icon ic = new ImageIcon(temp.getImage().getScaledInstance(32, 32, Image.SCALE_DEFAULT));
+        
         jm_insertar = new JMenu("Insertar");
         jm_insertar.setFont(fuente);
         jm_insertar.setMnemonic(KeyEvent.VK_I);
         jm_insertar.setForeground(Color.white);
-        //jm_insertar.focus
+        jm_insertar.setIcon(ic);
 
+        temp = new ImageIcon("iconos/opciones.png");
+        ic = new ImageIcon(temp.getImage().getScaledInstance(32, 32, Image.SCALE_DEFAULT));
+        
         jm_opc = new JMenu("Opciones...");
         jm_opc.setFont(fuente);
         jm_opc.setMnemonic(KeyEvent.VK_O);
         jm_opc.setForeground(Color.white);
+        jm_opc.setIcon(ic);
 
         jmb.add(jm_opc);
         jmb.add(jm_insertar);
@@ -106,8 +118,15 @@ public class Principal extends JFrame implements ActionListener {
         jmi_salir.setForeground(Color.white);
         jmi_salir.setBackground(Color.black);
 
+        JSeparator jjj = new JSeparator();
+        jjj.setBackground(Color.black);
+        JSeparator j2 = new JSeparator();
+        j2.setBackground(Color.black);
+        
         jm_opc.add(jmi_vacio);
+        jm_opc.add(jjj);
         jm_opc.add(jmi_imprimir);
+        jm_opc.add(j2);
         jm_opc.add(jmi_salir);
 
         jmi_Iadelante = new JMenuItem("Adelante (1)");
@@ -134,25 +153,13 @@ public class Principal extends JFrame implements ActionListener {
         pnl_imp.setBackground(new Color(255,255,255));
         pnl_imp.setVisible(true);
         fondo.add(pnl_imp);      
-        
-        /*lbl_res = new JLabel("Lista Actual:");
-        lbl_res.setBounds(10,10,200,25);
-        lbl_res.setFont(f2);
-        //lbl_res.setVisible(false);
-        pnl_imp.add(lbl_res);*/
 
         ta_res = new JTextArea();
         ta_res.setFont(f2);
-        //ta_res.setBounds(0,0,400,325);
-        //ta_res.setVisible(false);
-        //ta_res.setEnabled(false);
         ta_res.setEditable(false);
 
         js = new JScrollPane(ta_res);
         js.setBounds(20,20,400,325);
-        //js.setBorder(BorderFactory.createTitledBorder("Lista actual"));
-        //js.add(ta_res);
-        //js.setVisible(false);
         pnl_imp.add(js);
         
         pnl_Iadelante = new JPanel();
@@ -292,6 +299,11 @@ public class Principal extends JFrame implements ActionListener {
             if(this.lista.insertarAdelante(id, cancion, artista, album, genero))
             	JOptionPane.showMessageDialog(null,"Se ingresaron los datos", "Atención",JOptionPane.INFORMATION_MESSAGE);
             //pnl_Iadelante.setVisible(false);
+            tf_gen[0].setText("");
+            tf_alb[0].setText("");
+            tf_art[0].setText("");
+            tf_nom[0].setText("");
+            tf_id[0].setText("");
         }
         else if(e.getSource()==btn_aceptar[1]) {
         	pnl_Iatras.setVisible(false);
@@ -303,6 +315,12 @@ public class Principal extends JFrame implements ActionListener {
             
             if(this.lista.insertarAntes(id, cancion, artista, album, genero))
             	JOptionPane.showMessageDialog(null,"Se ingresaron los datos", "Atención",JOptionPane.INFORMATION_MESSAGE);
+            
+            tf_gen[1].setText("");
+            tf_alb[1].setText("");
+            tf_art[1].setText("");
+            tf_nom[1].setText("");
+            tf_id[1].setText("");
         }
     }
 
