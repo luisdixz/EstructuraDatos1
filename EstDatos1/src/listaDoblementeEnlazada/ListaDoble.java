@@ -39,34 +39,36 @@ public class ListaDoble {
 
     //public void encontrar
 
-    public void insertar(String id, String cancion, String artista, String album, String genero) {
+    public void insertar(Musica dat) {
         Nodo nodo = new Nodo();
 
         
-        nodo.setId(id);
+        /*nodo.setId(id);
         nodo.setCancion(cancion);
         nodo.setArtista(artista);
         nodo.setAlbum(album);
-        nodo.setGenero(genero);
+        nodo.setGenero(genero);*/
+        nodo.setDatos(dat);
         nodo.setAnt(null);
         nodo.setSig(null);
         this.cabeza = nodo;
     }
 
-    public boolean insertarAntes (String id, String cancion, String artista, String album, String genero) {
+    public boolean insertarAntes (Musica dat) {
         boolean res = false;
     	if(this.isVacio()) {
-            this.insertar(id,cancion,artista,album,genero);
+            this.insertar(dat);
             res = true;
     	}
         else {
             //Nodo temp = this.cabeza;
             Nodo nodo = new Nodo();
-            nodo.setId(id);
+            /*nodo.setId(id);
             nodo.setCancion(cancion);
             nodo.setArtista(artista);
             nodo.setAlbum(album);
-            nodo.setGenero(genero);
+            nodo.setGenero(genero);*/
+            nodo.setDatos(dat);
             nodo.setSig(this.cabeza);
             /*if (this.contar()>2) {
 
@@ -78,20 +80,20 @@ public class ListaDoble {
     	return res;
     }
 
-    public boolean insertarAdelante (String id, String cancion, String artista, String album, String genero) {
+    public boolean insertarAdelante (Musica dat) {
         boolean res= false;
     	if(this.isVacio()) {
-    		this.insertar(id,cancion,artista,album,genero);
+    		this.insertar(dat);
     		res = true;
     	}            
         else{
             Nodo nodo = new Nodo();
-            nodo.setId(id);
+            /*nodo.setId(id);
             nodo.setCancion(cancion);
             nodo.setArtista(artista);
             nodo.setAlbum(album);
-            nodo.setGenero(genero);
-            //.setDatos(datos);
+            nodo.setGenero(genero);*/
+            nodo.setDatos(dat);
 
             Nodo temp = this.cabeza;
 
@@ -108,7 +110,6 @@ public class ListaDoble {
     }
 
     public void eliminarPrimero () {
-
         this.setCabeza(this.cabeza.getSig());
         this.cabeza.setAnt(null);
         System.out.println("Nodo eliminado");
@@ -123,7 +124,9 @@ public class ListaDoble {
             cadena.append("Nodo anterior: ");
             cadena.append(temp.getAnt());
             cadena.append("\n");
-            cadena.append(temp.getId());
+            cadena.append(temp.getDatos());
+            cadena.append("\n");
+            /*cadena.append(temp.getId());
             cadena.append("\n");
             cadena.append(temp.getCancion());
             cadena.append("\n");
@@ -135,7 +138,7 @@ public class ListaDoble {
             cadena.append("\n");
             cadena.append("Nodo anterior: ");
             cadena.append(temp.getAnt());
-            cadena.append("\n");
+            cadena.append("\n");*/
             cadena.append("Nodo siguiente: ");
             cadena.append(temp.getSig());
 

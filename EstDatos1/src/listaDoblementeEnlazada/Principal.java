@@ -1,5 +1,6 @@
 package listaDoblementeEnlazada;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -24,19 +25,27 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+
+//import org.jvnet.substance.SubstanceLookAndFeel;
+import org.pushingpixels.substance.api.SubstanceLookAndFeel;
+import org.pushingpixels.substance.api.skin.SubstanceGraphiteLookAndFeel;
+import org.pushingpixels.substance.api.skin.SubstanceMarinerLookAndFeel;
 
 public class Principal extends JFrame implements ActionListener {
 
     private ListaDoble lista = new ListaDoble();
-
+    
+    //private Principal prin;
+    
     private JScrollPane js;
     private JMenuBar jmb;
     private JMenu jm_insertar,jm_eliminar, jm_recorrido, jm_opc;
-    private JMenuItem jmi_Iadelante, jmi_Iatras, jmi_imprimir, jmi_salir, jmi_vacio;
+    private JMenuItem jmi_Iadelante, jmi_Iatras, jmi_imprimir, jmi_salir, jmi_vacio, jmi_ePrim, jmi_eUlt;
     private JPanel fondo;
     private JLabel lbl_res;
     private JTextArea ta_res;
-    private JPanel pnl_Iadelante, pnl_imp, pnl_Iatras;
+    private JPanel pnl_Iadelante, pnl_imp, pnl_Iatras, pnl_elimP;
 
     private Font fuente = new Font("Tahoma", Font.PLAIN, 16);
     private Font f2 = new Font("Tahoma",Font.PLAIN,14);
@@ -59,17 +68,27 @@ public class Principal extends JFrame implements ActionListener {
     
     private String id, cancion, artista, album, genero;
     
-    public Principal() {
+    public ListaDoble getLista() {
+		return lista;
+	}
+
+	public void setLista(ListaDoble lista) {
+		this.lista = lista;
+	}
+    
+    public Principal() {    	
         setTitle("Listas");
         //setBounds(400,200,500,500);
         setSize(500,500);
         setLocationRelativeTo(null);
+        setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         fondo = new JPanel();
         fondo.setBackground(new Color(255,255,255));
         fondo.setLayout(null);
         setContentPane(fondo);
+        //add(fondo);
 
         jmb = new JMenuBar();
         jmb.setBorder(null);
@@ -94,9 +113,19 @@ public class Principal extends JFrame implements ActionListener {
         jm_opc.setMnemonic(KeyEvent.VK_O);
         jm_opc.setForeground(Color.white);
         jm_opc.setIcon(ic);
-
+        
+        temp = new ImageIcon("iconos/eliminar.png");
+        ic = new ImageIcon(temp.getImage().getScaledInstance(32, 32, Image.SCALE_DEFAULT));
+        
+        jm_eliminar = new JMenu("Eliminar");
+        jm_eliminar.setFont(fuente);
+        jm_eliminar.setMnemonic(KeyEvent.VK_E);
+        jm_eliminar.setForeground(Color.white);
+        jm_eliminar.setIcon(ic);
+        
         jmb.add(jm_opc);
         jmb.add(jm_insertar);
+        jmb.add(jm_eliminar);
 
         jmi_vacio = new JMenuItem("¿Lista vacia? (1)");
         jmi_vacio.setFont(f2);
@@ -145,14 +174,22 @@ public class Principal extends JFrame implements ActionListener {
 
         jm_insertar.add(jmi_Iadelante);
         jm_insertar.add(jmi_Iatras);
+        
+        jmi_ePrim = new JMenuItem("Primer nodo (1)");
+        jmi_ePrim.setFont(f2);
+        jmi_ePrim.setMnemonic(KeyEvent.VK_1);
+        jmi_ePrim.setForeground(Color.WHITE);
+        jmi_ePrim.setBackground(Color.black);
+        jmi_ePrim.addActionListener(this);
+        
+        jm_eliminar.add(jmi_ePrim);
 
         pnl_imp = new JPanel();
         pnl_imp.setBorder(BorderFactory.createTitledBorder("Lista actual"));
         pnl_imp.setLayout(null);
         pnl_imp.setBounds(25, 25, 440, 380);
         pnl_imp.setBackground(new Color(255,255,255));
-        pnl_imp.setVisible(true);
-        fondo.add(pnl_imp);      
+        pnl_imp.setVisible(true);      
 
         ta_res = new JTextArea();
         ta_res.setFont(f2);
@@ -168,7 +205,6 @@ public class Principal extends JFrame implements ActionListener {
         pnl_Iadelante.setBounds(25, 25, 440, 380);
         pnl_Iadelante.setBackground(new Color(255,255,255));
         pnl_Iadelante.setVisible(false);
-        fondo.add(pnl_Iadelante);  
         
         pnl_Iatras = new JPanel();
         pnl_Iatras.setBorder(BorderFactory.createTitledBorder("Insertar atras"));
@@ -176,7 +212,8 @@ public class Principal extends JFrame implements ActionListener {
         pnl_Iatras.setBounds(25, 25, 440, 380);
         pnl_Iatras.setBackground(new Color(255,255,255));
         pnl_Iatras.setVisible(false);
-        fondo.add(pnl_Iatras);
+        
+        //pnl_elimP = new JPanel();
         
         for(int i=0;i<2;i++) {
         	lbl_id[i] = new JLabel("id:");
@@ -255,11 +292,18 @@ public class Principal extends JFrame implements ActionListener {
         pnl_Iatras.add(tf_gen[1]);
         pnl_Iatras.add(btn_aceptar[1]);
         pnl_Iatras.add(btn_cancelar[1]);
+        
+        fondo.add(pnl_imp);
+        fondo.add(pnl_Iadelante);  
+        fondo.add(pnl_Iatras);
+        //card.show(fondo, "1");
+        
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource()== jmi_vacio) {
+        boolean ingr = false;
+    	if(e.getSource()== jmi_vacio) {
             if(this.lista.isVacio())
                 JOptionPane.showMessageDialog(null,"La lista esta vacía");
             else
@@ -269,12 +313,14 @@ public class Principal extends JFrame implements ActionListener {
         	pnl_imp.setVisible(false);
         	pnl_Iadelante.setVisible(true);
         	pnl_Iatras.setVisible(false);
+
+        	/*InsAdelante ib = new InsAdelante();
+        	ib.setVisible(true);*/
         }
         else if(e.getSource()==jmi_imprimir) {
             pnl_imp.setVisible(true);
             pnl_Iadelante.setVisible(false);
-            pnl_Iatras.setVisible(false);
-            
+            pnl_Iatras.setVisible(false);           
             String imp = this.lista.imprimir().toString();
             ta_res.setText(imp);
             
@@ -282,21 +328,48 @@ public class Principal extends JFrame implements ActionListener {
         	pnl_Iatras.setVisible(true);
         	pnl_imp.setVisible(false);
             pnl_Iadelante.setVisible(false);
-        }
+        } else if(e.getSource()==jmi_ePrim) {
+        	if(this.lista.isVacio())
+        		JOptionPane.showMessageDialog(null, "No hay nodo que eliminar");
+        	else {
+        		int res = JOptionPane.showConfirmDialog(null, "¿Desea eliminar el primer nodo?", "Atencion!", JOptionPane.INFORMATION_MESSAGE);
+        		if(res==0) {
+        			this.lista.eliminarPrimero();
+        			JOptionPane.showMessageDialog(null, "Nodo eliminado");
+        			String imp = this.lista.imprimir().toString();
+        			ta_res.setText(imp);
+        			pnl_Iatras.setVisible(false);
+        			pnl_imp.setVisible(true);
+        			pnl_Iadelante.setVisible(false);
+        		}
+        	}
+        	
+        	
+        	
+        } else if(e.getSource() == jmi_salir)
+        	System.exit(0);
         
         
         if(e.getSource()==btn_cancelar[0]) {
         	pnl_Iadelante.setVisible(false);
         }
         else if(e.getSource()==btn_aceptar[0]) {
+        	Musica mus = new Musica();
         	pnl_Iadelante.setVisible(false);
+        	
         	id = tf_id[0].getText();
             cancion = tf_nom[0].getText();
             artista = tf_art[0].getText();
             album = tf_alb[0].getText();
             genero = tf_gen[0].getText();
             
-            if(this.lista.insertarAdelante(id, cancion, artista, album, genero))
+            mus.setId(id);
+            mus.setCancion(cancion);
+            mus.setArtista(artista);
+            mus.setAlbum(album);
+            mus.setGenero(genero);
+            
+            if(this.lista.insertarAdelante(mus))
             	JOptionPane.showMessageDialog(null,"Se ingresaron los datos", "Atención",JOptionPane.INFORMATION_MESSAGE);
             //pnl_Iadelante.setVisible(false);
             tf_gen[0].setText("");
@@ -306,6 +379,7 @@ public class Principal extends JFrame implements ActionListener {
             tf_id[0].setText("");
         }
         else if(e.getSource()==btn_aceptar[1]) {
+        	Musica mus = new Musica();
         	pnl_Iatras.setVisible(false);
         	id = tf_id[1].getText();
             cancion = tf_nom[1].getText();
@@ -313,7 +387,13 @@ public class Principal extends JFrame implements ActionListener {
             album = tf_alb[1].getText();
             genero = tf_gen[1].getText();
             
-            if(this.lista.insertarAntes(id, cancion, artista, album, genero))
+            mus.setId(id);
+            mus.setCancion(cancion);
+            mus.setArtista(artista);
+            mus.setAlbum(album);
+            mus.setGenero(genero);
+            
+            if(this.lista.insertarAntes(mus))
             	JOptionPane.showMessageDialog(null,"Se ingresaron los datos", "Atención",JOptionPane.INFORMATION_MESSAGE);
             
             tf_gen[1].setText("");
@@ -322,13 +402,24 @@ public class Principal extends JFrame implements ActionListener {
             tf_nom[1].setText("");
             tf_id[1].setText("");
         }
+        
     }
 
-    public static void main(String[] args) {
+	public static void main(String[] args) {
+		//JFrame.setDefaultLookAndFeelDecorated(true);
+		//SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.CremeCoffeeSkin");
+		
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                Principal pr = new Principal();
+            	/*try {
+            		UIManager.setLookAndFeel(new SubstanceMarinerLookAndFeel());
+                  } catch (Exception e) {
+                    System.out.println("Substance Graphite failed to initialize");
+                  }
+            	
+            	*/
+            	Principal pr = new Principal();
                 pr.setVisible(true);
             }
         });

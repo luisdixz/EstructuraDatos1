@@ -39,4 +39,10 @@ public class Musica {
 	public void setGenero(String genero) {
 		this.genero = genero;
 	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "ID: "+this.getId()+"\nNombre de la cancion: "+this.getCancion()+"\nArtista: "+this.getArtista()+"\n¡lbum: "+this.getAlbum()+"\nGÈnero: "+this.getGenero();
+	}
 }

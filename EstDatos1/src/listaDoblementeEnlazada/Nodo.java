@@ -2,10 +2,10 @@ package listaDoblementeEnlazada;
 
 public class Nodo {
 	
-    //private Musica datos;
+    private Musica datos;
     private Nodo sig;
     private Nodo ant;
-    private String id;
+    /*private String id;
     private String cancion;
     private String artista;
     private String album;
@@ -40,9 +40,15 @@ public class Nodo {
 	}
 	public void setGenero(String genero) {
 		this.genero = genero;
-	}
+	}*/
 	public Nodo getSig() {
 		return sig;
+	}
+	public Musica getDatos() {
+		return datos;
+	}
+	public void setDatos(Musica datos) {
+		this.datos = datos;
 	}
 	public void setSig(Nodo sig) {
 		this.sig = sig;

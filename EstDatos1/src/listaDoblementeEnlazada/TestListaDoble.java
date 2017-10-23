@@ -29,10 +29,13 @@ public class TestListaDoble {
 
             switch (op) {
                 case 1:
-                    if(tld.lista.isVacio())
+                    /*if(tld.lista.isVacio())
                         System.out.println("La lista esta vacía\n");
                     else
-                        System.out.println("La lista no esta vacía\n");
+                        System.out.println("La lista no esta vacía\n");*/
+                	
+                	System.out.println(tld.lista);
+                        
                     break;
                 case 2:
                     System.out.println("-------------------------------------------");
