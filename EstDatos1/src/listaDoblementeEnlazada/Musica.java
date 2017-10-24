@@ -3,12 +3,11 @@ package listaDoblementeEnlazada;
 public class Musica {
 
 	private String id;
-    private String cancion;
-    private String artista;
-    private String album;
-    private String genero;
-    
-    
+	private String cancion;
+	private String artista;
+	private String album;
+	private String genero;
+	
 	public String getId() {
 		return id;
 	}
@@ -45,4 +44,5 @@ public class Musica {
 		// TODO Auto-generated method stub
 		return "ID: "+this.getId()+"\nNombre de la cancion: "+this.getCancion()+"\nArtista: "+this.getArtista()+"\n¡lbum: "+this.getAlbum()+"\nGÈnero: "+this.getGenero();
 	}
+	
 }
